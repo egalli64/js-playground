@@ -1,0 +1,5 @@
+create package.json : npm init -y
+add (express) node  : npm i express -E
+next patch version  : npm version patch
+project dependencies: npm ls
+npm configuration   : npm config ls
