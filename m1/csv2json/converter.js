@@ -19,6 +19,7 @@ const converter = (fileIn = DEFAULT_FILENAME) => {
     jsonArray.push(data)
   }).on('end', () => {
     fs.writeFileSync(fileOut, JSON.stringify(jsonArray, null, 2))
+    console.log(`${fileIn} converted to ${fileOut}`)
   }).on('error', (error) => {
     console.error(`Can't convert ${fileIn}: ${error.message}`)
   })
