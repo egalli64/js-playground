@@ -10,16 +10,13 @@ const fs = require('fs')
 
 const DEFAULT_FILENAME = 'customer-data.csv'
 const EXT = '.json'
-let jsonArray = []
 
 const converter = (fileIn = DEFAULT_FILENAME) => {
   let fileOut = fileIn.indexOf('.') == -1 ? fileIn + EXT : fileIn.replace(/\.[^/.]+$/, EXT)
 
-  csv().fromFile(fileIn).on('json', (data) => {
-    jsonArray.push(data)
-  }).on('end', () => {
-    fs.writeFileSync(fileOut, JSON.stringify(jsonArray, null, 2))
-    console.log(`${fileIn} converted to ${fileOut}`)
+  csv().fromFile(fileIn).on('end_parsed', jsonArray => {
+    fs.writeFileSync(fileOut, JSON.stringify(jsonArray, null, 2));
+    console.log(`${fileIn} converted to ${fileOut}`);
   }).on('error', (error) => {
     console.error(`Can't convert ${fileIn}: ${error.message}`)
   })
