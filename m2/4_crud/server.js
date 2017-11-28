@@ -1,11 +1,13 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const errorHandler = require('errorhandler')
 
 const app = express()
 
 app.use(morgan('dev'))
 app.use(bodyParser.json())
+app.use(errorHandler())
 
 let profiles = [{
     username: 'Tom',
@@ -15,20 +17,29 @@ let profiles = [{
 
 app.get('/profile', (req, res) => {
     let id = req.query.id
-    res.send(id ? profiles[id] : profiles)
+    res.status(200).send(id ? profiles[id] : profiles)
 })
 
 app.post('/profile', (req, res) => {
-    profiles.push(req.body)
-    console.log('created new profile', profiles)
-    res.sendStatus(201)
+    if(!req.body.username || !req.body.username.trim() || !req.body.email) {
+        res.sendStatus(400)
+    }
+    else {
+        let id = -1 + profiles.push({
+            username: req.body.username,
+            email: req.body.email,
+            url: req.body.url
+        })
+        console.log('created new profile:', profiles[id])
+        res.status(201).send({id: id})
+    }
 })
 
 app.put('/profile/:id', (req, res) => {
     let id = req.params.id
     Object.assign(profiles[id], req.body)
     console.log('update profile', profiles[id])
-    res.sendStatus(204)
+    res.status(200).send(profiles[id])
 })
 
 app.delete('/profile/:id', (req, res) => {
