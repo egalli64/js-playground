@@ -1,0 +1,7 @@
+npm init -y
+npm i express -E
+npm i node-dev -ED
+add in package.json - scripts: "start": "node-dev server.js"
+
+run server in dev mode: npm start
+test client: curl http://localhost:3000 -i
