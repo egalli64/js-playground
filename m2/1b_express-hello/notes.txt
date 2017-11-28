@@ -1,0 +1,3 @@
+Posting a json from curl:
+curl -d '{"key": "value"}' localhost:3000/users?api_key=1 -H 'Content-Type: application/json'
+

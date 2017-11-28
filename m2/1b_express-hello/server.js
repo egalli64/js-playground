@@ -1,10 +1,17 @@
 const express = require('express')
+const bodyParser = require('body-parser')
+const morgan = require('morgan')
+
 const app = express()
 
-app.use((request, response, next) => {
-    console.log(`${request.method}: ${request.url}`)
-    next()
-})
+app.use(morgan('dev'))
+app.use(bodyParser.json())
+
+// use morgan instead
+// app.use((request, response, next) => {
+//     console.log(`${request.method}: ${request.url}`)
+//     next()
+// })
 
 app.use((request, response, next) => {
     if(request.query.api_key) {
@@ -18,7 +25,8 @@ app.get('/', (request, response) => {
     response.send('home')
 })
 
-app.get('/users', (request, response) => {
+app.post('/users', (request, response) => {
+    console.log('The request body:', request.body)
     response.send('lot of users')
 })
 
