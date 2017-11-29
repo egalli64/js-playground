@@ -1,35 +1,5 @@
 /**
  * 
-GET and POST /posts
-PUT and DELETE /posts/:postId/
-GET and POST /posts/:postId/comments
-PUT and DELETE /posts/:postId/comments/commentId
-
-Create a folder named routes.
-Implement all /posts routes in routes/posts.js
- and all /posts/:postId/comments routes in routes/comments.js.
-Use module.exports to export the functions created for posts and comments
-Use require to import posts and comments functions
-Create routes/index.js which imports and exports posts.js and comments.js
- so they can be used with require('routes') in server.js
-The removal of a blog post must remove all its comments.
-
-//posts post data
-curl -H "Content-Type: application/json" -X POST 
- -d '{"name": "Top 10 ES6 Features", "url":"http://webapplog.com/es6", "text": ""}' 
-"http://localhost:3000/posts" 
-
-//updates post data at specific id
-curl -H 'Content-Type: application/json' -X PUT 
- -d '{"name": "Top 10 ES6 Features Every Developer Must Know",
-  "url":"http://webapplog.com/es6", "text": ""}'
- "http://localhost:3000/posts/0"
-
-//gets post data
-curl "http://localhost:3000/posts" 
-
-//deletes post data at specific id
-curl -X DELETE "http://localhost:3000/posts/0" 
  */
 
 const express = require('express')
@@ -44,18 +14,7 @@ app.use(morgan('dev'))
 app.use(bodyParser.json())
 
 let store = {
-    posts: [
-        {
-            name: 'Top 10 ES6 Features every Web Developer must know',
-            url: 'https://webapplog.com/es6',
-            text: 'This essay will give you a quick introduction to ES6.',
-            comments: [
-                { text: 'Cruel..var { house, mouse} = No type optimization at all' },
-                { text: 'I think you\'re undervaluing the benefit of "let" and "const".' },
-                { text: '(p1,p2)=>{ ... } ,i understand this ,thank you !' }
-            ]
-        }
-    ]
+    posts: []
 }
 
 app.get('/posts', (req, res) => {
@@ -63,22 +22,106 @@ app.get('/posts', (req, res) => {
     res.status(200).send(id ? store.posts[id] : store)
 })
 
-
-app.post('/posts', (req, res) => {
-    if(!req.body.name || !req.body.url || !req.body.text) {
-        res.sendStatus(400)
+app.get('/posts/:id/comments', (req, res) => {
+    let id = req.params.id
+    if (id < 0 || id >= store.posts.length) {
+        return res.sendStatus(400)
     }
-    else {
-        let id = -1 + store.posts.push({
-            name: req.body.name,
-            url: req.body.url,
-            text: req.body.text,
-            comments: []
-        })
-        console.log('created new post:', store.posts[id])
-        res.status(201).send({id: id})
-    }
+    res.status(200).send(store.posts[id].comments)
 })
 
+app.post('/posts', (req, res) => {
+    if (!req.body.name || !req.body.url || !req.body.text) {
+        return res.sendStatus(400)
+    }
+
+    let id = -1 + store.posts.push({
+        name: req.body.name,
+        url: req.body.url,
+        text: req.body.text,
+        comments: []
+    })
+    console.log('created:', store.posts[id])
+    res.status(201).send({ id: id })
+})
+
+app.post('/posts/:id/comments', (req, res) => {
+    let id = req.params.id
+    if (id < 0 || id >= store.posts.length || !req.body.text) {
+        return res.sendStatus(400)
+    }
+
+    store.posts[id].comments.push({
+        text: req.body.text
+    })
+
+    res.status(200).send(store.posts[id].comments)
+})
+
+app.put('/posts/:id', (req, res) => {
+    let id = req.params.id
+
+    if (id < 0 || id >= store.posts.length) {
+        return res.sendStatus(400)
+    }
+
+    let source = {}
+    if (req.body.name)
+        source.name = req.body.name
+    if (req.body.url)
+        source.url = req.body.url
+    if (req.body.text)
+        source.text = req.body.text
+
+    let target = store.posts[id]
+    Object.assign(target, source)
+    console.log('updated:', target)
+    res.status(200).send(target)
+})
+
+
+app.put('/posts/:pid/comments/:cid', (req, res) => {
+    let pid = req.params.pid
+    let cid = req.params.cid
+
+    if (pid < 0 || pid >= store.posts.length) {
+        return res.sendStatus(400)
+    }
+    if (cid < 0 || cid >= store.posts[pid].comments.length) {
+        return res.sendStatus(400)
+    }
+
+    let target = store.posts[pid].comments[cid]
+    Object.assign(target, { text: req.body.text })
+    console.log('updated:', target)
+    res.status(200).send(target)
+})
+
+app.delete('/posts/:id', (req, res) => {
+    let id = req.params.id
+    if (id < 0 || id >= store.posts.length) {
+        return res.sendStatus(400)
+    }
+
+    let gone = store.posts.splice(id, 1)
+    console.log('removed profile', gone)
+    res.sendStatus(204)
+})
+
+app.delete('/posts/:pid/comments/:cid', (req, res) => {
+    let pid = req.params.pid
+    let cid = req.params.cid
+
+    if (pid < 0 || pid >= store.posts.length) {
+        return res.sendStatus(400)
+    }
+    if (cid < 0 || cid >= store.posts[pid].comments.length) {
+        return res.sendStatus(400)
+    }
+
+    let gone = store.posts[pid].comments.splice(cid, 1)
+    console.log('removed comment', gone)
+    res.sendStatus(204)
+})
 
 app.listen(3000)
