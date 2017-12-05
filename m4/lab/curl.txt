@@ -1,0 +1,15 @@
+
+-- create account
+curl localhost:3000/accounts -X POST -d '{ "name": "Tom", "balance": 42.01 }' -H 'Content-Type: application/json'
+
+-- read accounts
+curl localhost:3000/accounts
+
+-- read one account
+curl localhost:3000/accounts/5a245ed7f4a03124f0e258f0
+
+-- update
+curl localhost:3000/accounts/5a245ed7f4a03124f0e258f0 -X PUT -d '{ "name": "Bo", "balance": 2.01 }' -H 'Content-Type: application/json'
+
+-- delete
+curl localhost:3000/accounts/5a26947ad417b81018e1d9d1 -X DELETE
