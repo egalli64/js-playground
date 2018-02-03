@@ -1,0 +1,21 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            $('[custom="demo"]').text('Found by exact match')
+            $('[custom^="my"]').text('Found at beginning')
+            $('[custom*="Ext"]').text('Found contains')
+        })
+    </script>
+</head>
+
+<body>
+    <h1 custom="demo">Hello 1</h1>
+    <h1 custom="myDemo">Hello 2</h1>
+    <h1 custom="demoExtra">Hello 3</h1>
+</body>
+
+</html>

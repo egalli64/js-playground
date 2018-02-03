@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            $('#target').click(function (event) {
+                $('#display').text('Click @ ' + event.clientX + ', ' + event.clientY)
+            })
+
+            $('#target').dblclick(function (event) {
+                $('#display').text('Double click @ ' + event.clientX + ', ' + event.clientY)
+            })
+
+            $('input[type="text"').focus(function (event) {
+                $(this).next('span.help').removeAttr('hidden')
+            }).blur(function (event) {
+                $('span.help').attr('hidden', 'hidden')
+            }).change(function (event) {
+                $('#display').text('Text changed to ' + $(this).val())
+            }).mouseenter(function () {
+                $('#display').text('Entered to text ' + this.id)
+            }).mouseleave(function () {
+                $('#display').text('Left from text ' + this.id)
+            }).hover(function () {
+                // mouseenter
+                $('#extra').text('Hovering on text ' + this.id)
+            }, function () {
+                // mouseleave
+                $('#extra').text('No more hovering on text ' + this.id)
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div id="target">Hello</div>
+    <div>Hello again</div>
+
+    <div>
+        <form>
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" />
+                <span class="help" hidden="hidden">Please, enter a name</span>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" />
+                <span class="help" hidden="hidden">Please, enter an email</span>
+            </div>
+        </form>
+    </div>
+
+    <div id="display"></div>
+    <div id="extra"></div>
+</body>
+
+</html>

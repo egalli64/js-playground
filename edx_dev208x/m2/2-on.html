@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            $('form').on('click', 'button.validate', function() {
+                $('#display').text('click')
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <form>
+        <div><button type="button" class="btn validate">First</button></div>
+        <div><button type="button" class="btn validate">Second</button></div>
+        <div><button type="button" class="btn">Third</button></div>
+    </form>
+
+    <div id="display"></div>
+</body>
+
+</html>

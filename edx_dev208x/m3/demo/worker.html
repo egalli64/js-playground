@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>title</title>
+</head>
+
+<body>
+
+  <div>
+    <button type="button" id="start-worker" class="btn">Start worker</button>
+    <button type="button" id="stop-worker" class="btn" disabled="disabled">Stop worker</button>
+  </div>
+  <div>
+    <label for="message">Message:</label>
+    <input type="text" id="message" class="form-control" />
+    <button type="button" id="send-message" class="btn" disabled="disabled">Send message</button>
+  </div>
+
+  <div id="output">
+    <h3>Messages here:</h3>
+  </div>
+
+  <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script-->
+  <script src="../libs/jquery-3.2.1.min.js"></script>
+
+  <script>
+    var worker = new Worker('worker.js');
+
+    $('#start-worker').click(function () {
+      // Stop worker when you're done
+      worker.postMessage('START');
+    });
+
+    $('#stop-worker').click(function () {
+      worker.postMessage('STOP');
+    })
+
+    $('#send-message').click(function () {
+      worker.postMessage($('#message').val());
+    });
+
+    worker.addEventListener('message', function (e) {
+      if (e.data === 'STARTED') {
+        // worker has been started
+        // sample: update the screen to display worker started
+        $('#output').append('<div>Worker started</div>');
+        // sample: Disable start button, and enable send and stop buttons
+        $('#start-worker').attr('disabled', 'disabled');
+        $('#stop-worker').removeAttr('disabled');
+        $('#send-message').removeAttr('disabled');
+      } else if (e.data === 'STOPPED') {
+        // worker has been stopped
+        // cleanup work (if needed)
+        // sample: update the screen to display worker stopped
+        $('#output').append('<div>Worker stopped</div>');
+        // sample: disable buttons
+        $('#stop-worker').attr('disabled', 'disabled');
+        $('#send-message').attr('disabled', 'disabled');
+        // set worker to NULL
+        worker = null;
+      } else {
+        // Normal message. Act upon data as needed
+        // Sample: display data on screen
+        $('#output').append('<div>' + e.data + '</div>');
+      }
+    });
+  </script>
+</body>
+
+</html>

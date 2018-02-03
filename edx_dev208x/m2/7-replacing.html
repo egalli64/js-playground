@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            $('#replacer').click(function () {
+                $('#target').replaceWith('<span id="target">Other stuff</span>')
+            })
+            $('#remover').click(function () {
+                $('#target').remove()
+            })
+            $('#emptier').click(function () {
+                $('#target').empty()
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <form>
+        <button type="button" id="replacer">Replacer</button>
+        <button type="button" id="remover">Remover</button>
+        <button type="button" id="emptier">Emptier</button>
+    </form>
+    <div id="target">Something</div>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            // $('#target').children().attr('style', 'color: red')
+            // $('#target').find('*').attr('style', 'color: red')
+            // $('#demo').parent().attr('style', 'color: red')
+            $('#demo').parents().attr('style', 'color: red')
+        })
+    </script>
+</head>
+
+<body>
+    <div id="target" style="color: black">
+        Grandparent
+        <div class="parent" style="color: black">
+            Parent
+            <div class="child" style="color: black">First child</div>
+            <div class="child" id="demo" style="color: black">Second child</div>
+        </div>
+    </div>
+</body>
+
+</html>

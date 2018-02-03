@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            $('button.updater').click(function () {
+                $('#display').text($('#display').text() + ' ' + $(this).text())
+            })
+
+            $('#clicker').click(function () {
+                $('button.updater').click()
+            })
+
+            $('#trigger').click(function () {
+                $('button.updater').trigger('click')
+            })
+
+            $('#trigger-handler').click(function () {
+                $('button.updater').triggerHandler('click')
+            })
+
+            $('#cleaner').click(function () {
+                $('#display').text('')
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <form>
+        <button type="button" class="updater">first</button>
+        <button type="button" class="updater">second</button>
+        <button type="button" id="clicker">clicker</button>
+        <button type="button" id="trigger">triggering</button>
+        <button type="button" id="trigger-handler">triggerHandler</button>
+        <button type="button" id="cleaner">cleaner</button>
+    </form>
+    <div id="display"></div>
+</body>
+
+</html>

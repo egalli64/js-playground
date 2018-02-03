@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            $('#adder').click(function () {
+                // inside
+                $('#display').prepend('<div>Prepended</div>')
+                $('#display').append('<div>Appended</div>')
+                // outside
+                $('#display').before('<div>Before</div>')
+                $('#display').after('<div>After</div>')
+            })
+
+            $('#wrapperPlain').click(function () {
+                $('.target').wrap('<div class="plain"></div>')
+            })
+
+            $('#wrapperAll').click(function () {
+                $('.target').wrapAll('<div class="all"></div>')
+            })
+
+            $('#wrapperInner').click(function () {
+                $('.target').wrapInner('<div class="inner"></div>')
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <form>
+        <button type="button" id="adder">Adder</button>
+        <button type="button" id="wrapperPlain">Plain wrapper</button>
+        <button type="button" id="wrapperAll">Wrapper all</button>
+        <button type="button" id="wrapperInner">Wrapper inner</button>
+    </form>
+    <div id="display" class="target">
+        <div>Something</div>
+    </div>
+    <div id="extra" class="target">
+        <div>Something else</div>
+    </div>
+</body>
+
+</html>

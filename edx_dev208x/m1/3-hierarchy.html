@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            $('div > a').text('Parent/Child')
+            $('nav  a').text('Descendant')
+        })
+    </script>
+</head>
+
+<body>
+    <h1>Hello, H1</h1>
+    <div>
+        <a href="#">(First)</a>
+        <span>
+            <a href="#">(Second)</a>
+        </span>
+    </div>
+    <nav>
+        <a href="#">(First)</a>
+        <div>
+            <a href="#">(Second)</a>
+        </div>
+    </nav>
+</body>
+
+</html>

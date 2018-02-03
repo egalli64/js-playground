@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>title</title>
+</head>
+
+<body>
+
+	<div>
+		<button type="button" class="btn" id="start-worker">Start worker</button>
+	</div>
+	<ul id="messages"></ul>
+
+	<!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script-->
+	<script src="../libs/jquery-3.2.1.min.js"></script>
+
+	<script>
+		$(function () {
+			$('#start-worker').click(function () {
+				// get promise
+				let promise = beginProcessing()
+
+				// register our event handlers
+				promise.progress(function (message) {
+					// Update the UI for progress
+					$('#messages').append('<li>Progress: ' + message + '</li>')
+				}).done(function (message) {
+					// Update the UI for completion
+					$('#messages').append('<li>Completion: ' + message + '</li>')
+				})
+			})
+		})
+
+		function beginProcessing() {
+			// Create deferred object & make sure it's going to be in scope
+			let deferred = new $.Deferred()
+
+			// Create our worker (just like before)
+			let worker = new Worker('3-deferred.js')
+
+			// Register the message event handler
+			worker.addEventListener('message', function (e) {
+				// simple messaging - if the worker is ready it'll send a message with READY as the text
+				if (e.data === 'READY') {
+					// No UI code
+					// Progress notification
+					deferred.notify('Worker started')
+				} else if (e.data === 'COMPLETED') {
+					// processing is done
+					// No UI code
+					// Completed notification
+					deferred.resolve('Worker completed')
+					worker.terminate()
+				}
+			})
+
+			return deferred.promise()
+		}
+	</script>
+</body>
+
+</html>

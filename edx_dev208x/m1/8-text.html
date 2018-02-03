@@ -1,0 +1,26 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            let target = $('#target')
+            target.html('<u>Modified</u>')
+            $('#other').text('<u>Modified</u>')
+
+            $('div').click(function () {
+                let header = (this.id == 'display') ? 'Display' : $(this).text()
+                $('#display').text(header + ' was clicked')
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div id="target">Hello</div>
+    <div id="other">Hello again</div>
+    <div id="display"></div>
+</body>
+
+</html>

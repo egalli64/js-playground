@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            $('#creator').click(function () {
+                $('#target').html('<div><button type="button" class="btn updater">New</button></div>')
+            })
+
+            // only for already existing elements
+            // $('button.updater').click(function () {
+            //     $('#display').text($(this).text() + ' click')
+            // })
+
+            // classic jQuery style
+            // $('form').delegate('button.updater', 'click', function () {
+            //     $('#display').text($(this).text() + ' click')
+            // })
+
+            // modern jQuery style
+            $('form').on('click', 'button.updater', function () {
+                $('#display').text($('#display').text() + $(this).text() + ' click! ')
+            })
+
+            // once clicker
+            $('.one-upd').one('click', function () {
+                $('#display').text($(this).text() + ' click! ')
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <form>
+        <div>
+            <button type="button" class="btn" id="creator">Creator</button>
+        </div>
+        <div>
+            <button type="button" class="btn updater">Updater</button>
+        </div>
+        <div>
+            <button type="button" class="btn one-upd">Just once</button>
+        </div>
+        <div id="target"></div>
+    </form>
+
+    <div id="display"></div>
+</body>
+
+</html>

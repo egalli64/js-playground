@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <style>
+        #box {
+            height: 5em;
+            width: 5em;
+            background-color: darkblue;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            $('#async').click(function () {
+                $('#box').toggle(1000)
+                $('#output').append('async toggling ')
+            })
+
+            $('#sync').click(function () {
+                $('#box').toggle(1000).promise().done(() => {
+                    $('#output').append('sync toggling ')
+                })
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <form>
+        <button type="button" id="async">Asynchronously</button>
+        <button type="button" id="sync">Synchronously</button>
+    </form>
+    <div id="box">
+        Something
+    </div>
+    <div id="output"></div>
+</body>
+
+</html>

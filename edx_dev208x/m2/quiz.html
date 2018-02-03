@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            // $('#target').after('<section>New element</section>')
+
+            // $('#parent').children().wrapAll('<section></section>');
+
+            // $('#target').append('<section>New element</section>');
+
+            // let function1 = function () {
+            //     $('#feedback').append('Hello ')
+            // }
+            // $('#button1').one('click', function1)
+
+            // $('#button1').click(function () {
+            //     var button = $(this)
+            //     button.text('clicked!')
+            // })
+
+            // $(function () {
+            //     $(document).on('click', 'button', function1)
+            //     function1()
+            // })
+            // function function1() {
+            //     $('#container').append('<button>Click!</button>')
+            // }
+        })
+    </script>
+</head>
+
+<body>
+    <div id="parent">
+        <div class="sample">Text</div>
+        <div class="demo">Text</div>
+        <div id="target">Text</div>
+        <div class="demo">Text</div>
+    </div>
+
+    <div>
+        <button id="button1">Button One</button>
+    </div>
+    <div>
+        <button id="button2">Button Two</button>
+    </div>
+
+    <div id="container"></div>
+
+    <div id="feedback"></div>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            // let affected = $('#target').prev()
+            // let affected = $('#target').prevAll()
+            // let affected = $('#target').prevUntil('.stop')
+            // let affected = $('#target').next()
+            // let affected = $('#target').nextAll()
+            let affected = $('#target').nextUntil('.stop')
+            affected.attr('style', 'color: red')
+        })
+    </script>
+</head>
+
+<body>
+    <div class="stop" style="color: black">First</div>
+    <div style="color: black">Second</div>
+    <div style="color: black">Third</div>
+    <div id="target" style="color: black">Fourth</div>
+    <div style="color: black">Fifth</div>
+    <div style="color: black">Sixth</div>
+    <div class="stop" style="color: black">Seventh</div>
+</body>
+
+</html>

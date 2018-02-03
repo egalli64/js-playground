@@ -1,0 +1,144 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+        body {
+            font-family: Verdana;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: darkblue;
+        }
+
+        .rating-circle {
+            height: 2em;
+            width: 2em;
+            border: .1em solid black;
+            border-radius: 1.1em;
+            display: inline-block;
+            margin: 0;
+            padding: .1em;
+        }
+
+        .rating-hover {
+            background-color: yellow;
+        }
+
+        .rating-chosen {
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Contoso Web Developer Conference</h1>
+    <h2>Finding elements using jQuery</h2>
+    <div>This session is about identifying elements using jQuery methods and selectors.</div>
+    <h3>Rate this session</h3>
+    <div id="rating-container" max-value="5"></div>
+
+    <div>
+        <label for="max-value">Enter max value:</label>
+        <input type="text" id="max-value" />
+        <button type="button" id="update-max-value">Update max value</button>
+    </div>
+    <button type="button" id="save-rating">Save rating</button>
+    <div id="output"></div>
+
+    <!--script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script-->
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+
+    <script>
+        // any circle will clone this element
+        let $circle = $('<div class="rating-circle"></div>')
+        // the rating container, defined when page ready
+        let $ratings
+        // score assigned by user
+        let score = 0
+        let maxScore = 0
+
+        // page ready, let's go!
+        $(function () {
+            $ratings = $('#rating-container')
+
+            // reset the container, using the default max value as its size
+            resetContainer($ratings.attr('max-value'))
+
+            // user could change the max value, aka number of circles
+            $('#update-max-value').click(function () {
+                let $input = $('#max-value')
+                resetContainer($input.val())
+                $input.val('')
+            })
+
+            // delegates for behavior of present and future circles
+            $ratings.on('mouseenter', '.rating-circle', function () {
+                let circles = $ratings.children()
+                let selected = circles.index($(this))
+
+                circles.removeClass('rating-chosen')
+                for (let i = 0; i <= selected; i++) {
+                    $(circles[i]).addClass('rating-hover')
+                }
+            }).on('click', '.rating-circle', function () {
+                score = $ratings.children().index($(this)) + 1
+                rate()
+            }).on('mouseleave', '.rating-circle', function () {
+                $ratings.children().removeClass('rating-hover')
+                rate()
+            })
+
+            // post the score to the server, output the server feedback
+            $('#save-rating').click(function () {
+                let url = 'http://jquery-edx.azurewebsites.net/api/Rating'
+                let payload = {
+                    value: score,
+                    maxValue: maxScore
+                }
+                $.post(url, payload).done(function (data) {
+                    $('#output').text(data.message)
+                }).fail(function (xhr, status, error) {
+                    $('#output').text('Cannot send your evaluation to server due to ' + error)
+                })
+            })
+
+            // avoid duplicated posting
+            $(document).ajaxSend(function () {
+                $('#save-rating').attr('disabled', 'disabled')
+            }).ajaxComplete(function () {
+                $('#save-rating').removeAttr('disabled')
+            })
+        })
+
+        /**
+         * Put the right amount of circles in the rating container
+         *
+         * size: higher score possible
+         */
+        let resetContainer = function (size) {
+            score = 0
+            maxScore = size
+            $ratings.empty()
+
+            for (let i = 0; i < size; i++) {
+                $ratings.append($circle.clone())
+            }
+        }
+
+        /**
+         * Assign the chosen class to circles
+         * accordingly to the current score
+         */
+        let rate = function () {
+            let circles = $ratings.children()
+            for (let i = 0; i < score; i++) {
+                $(circles[i]).addClass('rating-chosen')
+            }
+        }
+    </script>
+</body>
+
+</html>

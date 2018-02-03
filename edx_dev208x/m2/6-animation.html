@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <style>
+        #box {
+            height: 5em;
+            width: 5em;
+            background-color: darkblue;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            $('#hider').click(function () {
+                // $('#box').hide(1000)
+                $('#box').toggle(1000)
+            })
+
+            $('#fader').click(function () {
+                $('#box').fadeToggle(1000)
+            })
+            
+            $('#slider').click(function () {
+                $('#box').slideToggle(1000)
+            })
+
+            $('#show-additional-information').click(function () {
+                $('#additional-information').show(750)
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <form>
+        <button type="button" id="hider">Hide or show</button>
+        <button type="button" id="fader">Fade in - out</button>
+        <button type="button" id="slider">Slide in - out</button>
+    </form>
+    <div id="box">
+        Something
+    </div>
+    <hr />
+    <button type="button" id="show-additional-information">
+        Show additional information
+    </button>
+    <div id="additional-information" class="hidden">
+        <label>Additional information:</label>
+        <input type="text" />
+    </div>
+</body>
+
+</html>

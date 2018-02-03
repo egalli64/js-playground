@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            let element = $('#target')
+            let container = $('#container')
+            let index = container.children().index(element)
+            $('#display').text('Index is ' + index)
+
+            let domElementFound = container.children().get(index)
+            $(domElementFound).attr('style', 'color: red')
+        })
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <div>First</div>
+        <div>Second</div>
+        <div>Third</div>
+        <div id="target">Fourth</div>
+        <div>Fifth</div>
+        <div>Sixth</div>
+        <div>Seventh</div>
+    </div>
+    <div id="display"></div>
+</body>
+
+</html>

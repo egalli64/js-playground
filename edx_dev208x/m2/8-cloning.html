@@ -1,0 +1,26 @@
+<html>
+
+<head>
+    <title>Hello</title>
+    <script src="../libs/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            let $line = $('#target').clone()
+            $line.removeAttr('id')
+
+            $('#cloner').click(function () {
+                $('#container').append($line.clone())
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <form>
+        <button type="button" id="cloner">Cloner</button>
+    </form>
+    <div id="target">Something</div>
+    <div id="container"></div>
+</body>
+
+</html>
