@@ -1,0 +1,4 @@
+function funcA() {
+    funcA();
+}
+funcA();

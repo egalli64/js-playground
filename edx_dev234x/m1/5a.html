@@ -1,0 +1,30 @@
+<html>
+
+<body>
+    <button id="btnA" onclick="handleClick()">Click</button>
+    <button id="btnB">Click</button>
+    <p id="parA">Keys Pressed: </p>
+    <script>
+        var value = 0
+
+        let btn = document.querySelector('#btnB')
+        // btn.addEventListener('click', function () {
+        //     btn.innerHTML = ++value
+        // });
+        btn.addEventListener('click', () => btn.innerHTML = ++value);
+
+        function handleClick() {
+            document.querySelector('#btnA').innerHTML = ++value
+        }
+
+        // document.addEventListener('keypress', handleKeyPress)
+        document.onkeypress = handleKeyPress
+
+        function handleKeyPress(event) {
+            var keyPressed = event.key
+            document.querySelector('#parA').innerHTML += keyPressed
+        } 
+    </script>
+</body>
+
+</html>

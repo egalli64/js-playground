@@ -1,0 +1,20 @@
+<script>
+    function* genFunc() {
+        var post1title = yield fetch('https://jsonplaceholder.typicode.com/posts/1')
+        console.log(post1title)
+        //post1title = 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit'
+        var post2title = yield fetch('https://jsonplaceholder.typicode.com/posts/2')
+        console.log(post2title)
+        //post2title = 'qui est esse'
+    }
+
+    var genObject = genFunc()
+
+    // get the promise from the first yielded value by the generator
+    genObject.next().value
+        .then(val => val.json())
+        // get the second promise
+        .then(json => genObject.next(json.title).value
+            .then(val => val.json())
+            .then(json => genObject.next(json.title)))
+</script>

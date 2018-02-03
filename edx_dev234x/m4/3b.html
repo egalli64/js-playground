@@ -1,0 +1,31 @@
+<script>
+    function* genFunc() {
+        var post1title = yield fetch('https://jsonplaceholder.typicode.com/posts/1')
+        console.log(post1title)
+        //post1title = 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit'
+        var post2title = yield fetch('https://jsonplaceholder.typicode.com/posts/2')
+        console.log(post2title)
+        //post2title = 'qui est esse'
+    }
+
+    function run(genFunc) {
+        const genObject = genFunc(); //creating a generator object
+
+        function iterate(iteration) { //recursive function to iterate through promises
+            if (iteration.done) //stop iterating when done and return the final value wrapped in a promise
+                return Promise.resolve(iteration.value);
+            return Promise.resolve(iteration.value) //returns a promise with its then() and catch() methods filled
+                .then(x => iterate(genObject.next(x))) //calls recursive function on the next value to be iterated
+                .catch(x => iterate(genObject.throw(x))); //throws an error if a rejection is encountered
+        }
+
+        try {
+            return iterate(genObject.next()); //starts the recursive loop
+        } catch (ex) {
+            return Promise.reject(ex); //returns a rejected promise if an exception is caught
+        }
+    }
+
+    run(genFunc).then(x => console.log(x)) //logs "done"
+        .catch(x => console.log(x.message));
+</script>

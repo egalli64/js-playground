@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="library.js"></script>
+</head>
+
+<body>
+    <div>
+        <h3>Search Product</h3>
+        <input id="input">
+        <button id="btnSearchById">Id</button>
+        <button id="btnSearchByPrice">Price</button>
+        <button id="btnSearchByType">Type</button>
+    </div>
+
+
+    <div>
+        <h3>Examined Product</h3>
+        <p id="productText">
+            Product Id:
+            <span id='spnId'></span>
+            <br> Price:
+            <span id='spnPrice'></span>
+            <br> Type:
+            <span id='spnType'></span>
+        </p>
+        <h3>List of Similar Products</h3>
+
+        <table id="tblSimilar" width="300px" border="1">
+            <tr>
+                <th>ProductId</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Examine</th>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <h3>List of All Products</h3>
+        <table id="tblAll" width="300px" border="1">
+            <tr>
+                <th>ProductId</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Examine</th>
+            </tr>
+        </table>
+    </div>
+    <script src="productCatalog.js"></script>
+</body>
+
+</html>

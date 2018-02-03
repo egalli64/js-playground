@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ship Comparison</title>
+    <link href="comparison.css" rel="stylesheet">
+    <script src="comparison.js"></script>
+</head>
+
+<body>
+    <h3>Select Starships</h3>
+    <select id="selLeft"></select>
+    <select id="selRight"></select>
+    <button type="submit" id="btnCompare">Compare</button>
+
+    <h3>Comparison:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Features</th>
+                <th id="nameLeft">Left</th>
+                <th id="nameRight">Right</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Cost</td>
+                <td id="costLeft"></td>
+                <td id="costRight"></td>
+            </tr>
+            <tr>
+                <td>Speed</td>
+                <td id="speedLeft"></td>
+                <td id="speedRight"></td>
+            </tr>
+            <tr>
+                <td>Cargo Size</td>
+                <td id="sizeLeft"></td>
+                <td id="sizeRight"></td>
+            </tr>
+            <tr>
+                <td>Passengers</td>
+                <td id="passLeft"></td>
+                <td id="passRight"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
