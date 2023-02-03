@@ -1,10 +1,12 @@
-JavaScript Courses
+# JavaScript Courses and Exercises
 
-# edx_dev283x
-edX 283: Introduction to NodeJS
+## Introduction to jQuery
+edx_dev208x
 
-# edx_dev234x
-edX 234: Asynchronous Programming with Javascript
+## Asynchronous Programming with Javascript
+edx_dev234x
 
-# edx_dev208x
-edX 208: Introduction to jQuery
+## Introduction to NodeJS
+edx_dev283x
+
+## [Exercism](https://github.com/egalli64/js-playground/tree/master/exercism/) JavaScript track
